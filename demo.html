@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>九宫盒</title>
+        <style type="text/css">
+            html,body{
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                font-family: 'Microsoft yahei';
+                background: url("index/images/13.jpg");
+                position: relative;
+                -webkit-user-select:none;
+                -moz-user-select:none;
+                -ms-user-select:none;
+                user-select:none;
+            }
+            ul,li{
+                margin: 0;
+                padding: 0;
+                list-style: none;
+            }
+            ul{
+                width: 300px;
+                height: 300px;
+                margin: 0 auto;
+                position: relative;
+                top: 15%;
+                border: 3px solid #aaa;
+            }
+            ul li{
+                position: absolute;
+                background-color: #6DA7D8;
+                font-size: 30px;
+                text-align: center;
+                line-height: 100px;
+                cursor: pointer;
+                width: 98px;
+                height: 98px;
+                border: 1px solid #eee;
+                transition: all 500ms ease;
+                -moz-transition: all 500ms ease;
+                -webkit-transition: all 500ms ease;
+                -o-transition: all 500ms ease;
+                background-size: 100%;
+            }
+            #hidden{
+                display: none;
+            }
+            button{
+                width: 120px;
+                height: 30px;
+                border: 0;
+                color: #fff;
+                background-color: rgba(86, 81, 81, .7);
+                position: relative;
+                left: 50%;
+                margin-left: -60px;
+                top: 50px;
+                font-family: "Microsoft yahei";
+                cursor: pointer;
+            }
+            button:focus{
+                outline: none; 
+            }
+            button:hover{
+                color: #eee;
+                background-color: rgba(86, 81, 99, 1);
+            }
+            p{
+                width: 100px;
+                height: 50px;
+                background-color: rgba(86, 81, 81, .7);
+                position: relative;
+                left: 20%;
+                top: -200px;
+            }
+        </style>
+    </head>
+    <body>
+        <ul>
+        </ul>
+        <script type="text/javascript">
+        window.onload = function(){
+            var options = {
+                "row" : 3,
+                "col" : 3,
+                "width" : 100
+            }
+            // 全局变量。
+            var li = document.getElementsByTagName("li"),
+                row = options.row || 1,
+                col = options.row || 1,
+                width = options.width,
+                arry = [],
+                time = "",
+                sortTime = "";
+                var p = document.createElement("p");
+                    document.body.appendChild(p);
+
+            init();
+            bander();
+            render();
+            function init(){    //生成相应的图片和开始按钮
+                var btn = document.createElement("button"),
+                    ul = document.getElementsByTagName("ul")[0],
+                    html = "";
+                btn.innerHTML = "开始游戏";
+                document.body.appendChild(btn);
+                for(var i = 0; i < row*col; i++){
+                    html += "<li class='item"+i+"'></li>";
+                }
+                ul.innerHTML = html;
+                for(var i = 0;i < row; i++){
+                    for(var j = 0;j<col;j++){
+                        arry.push([i*width,j*width])
+                    }
+                }
+            }
+
+            function bander(){  //li的位置
+                for(var i = 0; i<li.length; i++){
+                    li[i].style.backgroundImage = "url(index/images/"+(i+1)+".jpg)"
+                    li[i].style.top = arry[i][0] + "px";
+                    li[i].style.left = arry[i][1] + "px";
+                    li[i].setAttribute("index", i);
+                    li[i].setAttribute("coordinate", arry[i][0]+":"+arry[i][1]);
+                }
+            }
+            // 按钮的点击事件 和 图片的移动事件
+            function render(){  
+                p.innerHTML = "";
+                var button = document.getElementsByTagName("button")[0];
+                button.onclick = function(){
+                    if(button.innerText == "开始游戏"){
+                    var random = parseInt(Math.random()*li.length);
+                    li[random].id = "hidden";
+                    var hidden = document.getElementById("hidden");
+                        var sected = 500;
+                        for(var i = 0;i<20;i++){
+                            var hiddenTop = parseInt(hidden.style.top),
+                                hiddenLeft = parseInt(hidden.style.left),
+                                lirandom = parseInt(Math.random()*li.length),
+                                liTop = parseInt(li[lirandom].style.top),
+                                liLeft = parseInt(li[lirandom].style.left);
+                            if(random != lirandom){
+                                hidden.style.top = liTop + "px";
+                                hidden.style.left = liLeft + "px";
+                                li[lirandom].style.top = hiddenTop + "px";
+                                li[lirandom].style.left = hiddenLeft + "px";
+                            }
+                        }
+                        button.innerHTML = "停止排序";
+
+                    button.innerHTML = "倒计时500s结束";
+                    time = window.setInterval(function(){
+                        sected --;
+                        button.innerHTML = "倒计时"+(sected < 10? "0" + sected : sected)+"s结束";
+                            var index = 0;
+                        for(var i = 0;i< li.length; i++){
+                            li[i].onclick = function(){
+                                var hiddenTop = parseInt(hidden.style.top),
+                                    hiddenLeft = parseInt(hidden.style.left);
+                                var thisTop = parseInt(this.style.top),
+                                    thisLeft = parseInt(this.style.left);
+                                if(thisTop == hiddenTop){
+                                    if((thisLeft == hiddenLeft - width) ||(thisLeft == hiddenLeft + width)){
+                                        hidden.style.top = thisTop + "px";
+                                        hidden.style.left = thisLeft + "px";
+                                        this.style.top = hiddenTop + "px";
+                                        this.style.left = hiddenLeft + "px";
+                                    }
+                                }else if(thisLeft == hiddenLeft){
+                                    if((thisTop == hiddenTop - width) ||(thisTop == hiddenTop + width)){
+                                        hidden.style.top = thisTop + "px";
+                                        hidden.style.left = thisLeft + "px";
+                                        this.style.top = hiddenTop + "px";
+                                        this.style.left = hiddenLeft + "px";
+                                    }
+                                }
+                                    
+                            }
+                            if(parseInt(li[i].style.top) == li[i].getAttribute("coordinate").split(":")[0] && parseInt(li[i].style.left) == li[i].getAttribute("coordinate").split(":")[1]){
+                                    index++
+                                    if(index == 9){
+                                        window.clearInterval(time);
+                                        button.innerHTML = "开始游戏";
+                                        p.innerHTML = "闯关成功";
+                                        hidden.id = "";
+                                    }
+                            } 
+                        }
+                        if(sected<=0){
+                            window.clearInterval(time);
+                            hidden.id = "";
+                            button.innerHTML = "开始游戏";
+                            button.style.backgroundColor = "rgba(86, 81, 81, .7)";
+                            p.innerHTML = "闯关失败";
+                        }
+                    },1000)
+                }
+            }
+            }
+        }
+        </script>
+    </body>
+</html>

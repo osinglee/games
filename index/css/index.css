@@ -1,0 +1,74 @@
+/* 
+* @Author: Marte
+* @Date:   2016-12-21 15:26:38
+* @Last Modified by:   Marte
+* @Last Modified time: 2017-02-27 22:38:16
+*/
+html,body{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Microsoft yahei';
+    background: url("../images/13.jpg");
+    position: relative;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+}
+ul,li{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+ul{
+    margin: 0 auto;
+    position: relative;
+    top: 40px;
+    border: 3px solid #aaa;
+}
+ul li{
+    position: absolute;
+    background-color: #6DA7D8;
+    font-size: 30px;
+    text-align: center;
+    line-height: 150px;
+    cursor: pointer;
+    width: 100px;
+    height: 100px;
+    float: left;
+    box-shadow:0 0 5px #abcdef;
+    transition: all 500ms ease;
+    -moz-transition: all 500ms ease;
+    -webkit-transition: all 500ms ease;
+    -o-transition: all 500ms ease;
+    background-size: 100%;
+}
+#hidden{
+    display: none;
+    transition: all 500ms ease;
+    -moz-transition: all 500ms ease;
+    -webkit-transition: all 500ms ease;
+    -o-transition: all 500ms ease;
+}
+button{
+    width: 120px;
+    height: 30px;
+    border: 0;
+    color: #fff;
+    background-color: rgba(86, 81, 81, .7);
+    position: relative;
+    left: 50%;
+    margin-left: -60px;
+    top: 50px;
+    font-family: "Microsoft yahei";
+    cursor: pointer;
+}
+button:focus{
+    outline: none; 
+}
+button:hover{
+    color: #eee;
+    background-color: rgba(86, 81, 99, 1);
+}
